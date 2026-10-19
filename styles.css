@@ -551,9 +551,11 @@ td.meta{white-space:nowrap}
    Section 10 · Before MNAI: gates, markdown extras, admin
    ============================================================ */
 
-/* desktop-only sidebar open button (left of the model picker) */
-.side-btn{display:inline-flex}
-@media (max-width:860px){ .side-btn{display:none} }
+/* desktop: the sidebar-open button only appears when the sidebar is closed */
+.side-btn{display:none}
+@media (min-width:861px){
+  .app.side-hidden .side-btn{display:inline-flex}
+}
 
 .empty-recents{
   font-size:12.5px;color:var(--text-faintest);
@@ -697,3 +699,42 @@ td.meta{white-space:nowrap}
   .gate-card{padding:36px 26px}
   .gate-title{font-size:22px}
 }
+
+/* ============================================================
+   Section 11 · Offline popup + admin scheduling
+   ============================================================ */
+.modal-backdrop{
+  position:fixed;inset:0;z-index:100;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.66);
+  backdrop-filter:blur(5px);
+  animation:fadeIn .3s ease both;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-card{
+  width:100%;max-width:380px;text-align:center;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:34px 30px;
+  box-shadow:0 24px 70px rgba(0,0,0,.6);
+  animation:gateIn .45s var(--ease-out) both;
+}
+.modal-card .gate-brand{margin-bottom:12px}
+.modal-card .admin-btn{margin-top:24px}
+
+.sched-box{margin-top:22px;padding-top:18px;border-top:1px solid var(--border-soft)}
+.sched-row{display:flex;gap:8px;margin-top:6px}
+.admin-datetime,.admin-select{
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--text);
+  padding:10px 12px;
+  font-family:inherit;font-size:13.5px;
+  outline:none;color-scheme:dark;
+}
+.admin-datetime{flex:1;min-width:0}
+.admin-select{flex:0 0 auto}
+.sched-note{margin-top:10px;font-size:13px;line-height:1.6;color:var(--text-dim)}
