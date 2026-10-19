@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Admin · Before MNAI</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230a0a0a'/><text x='16' y='22' font-family='Arial' font-size='18' font-weight='700' fill='white' text-anchor='middle'>B</text></svg>">
+</head>
+<body>
+<div class="admin-page">
+  <div class="admin-card" data-anim>
+    <p class="gate-brand">Before MNAI · Admin</p>
+    <h1 class="admin-title">Site control</h1>
+
+    <div id="adminSignin">
+      <p class="gate-sub">Sign in with the owner account to manage the site.</p>
+      <button class="google-btn" id="adminGoogleBtn" type="button">
+        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M23.5 12.3c0-.9-.1-1.5-.3-2.3H12v4.3h6.5c-.1 1.1-.8 2.7-2.4 3.8l-.1.1 3.5 2.7.2.1c2.2-2 3.8-5 3.8-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.8-2.9c-1 .7-2.4 1.2-4.1 1.2-3.1 0-5.8-2.1-6.8-5l-.1.1-3.6 2.8-.1.1C3.5 21.3 7.5 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.7.4-2.4l-.1-.1-3.6-2.8-.1.1C.5 8.5 0 10.1 0 12s.5 3.5 1.4 5.1l3.8-2.7z"/><path fill="#EA4335" d="M12 4.7c1.8 0 3 .8 3.7 1.4l3.3-3.2C17.9 1.1 15.2 0 12 0 7.5 0 3.5 2.7 1.4 6.8l3.8 2.9c1-2.9 3.7-5 6.8-5z"/></svg>
+        <span>Sign in with Google</span>
+      </button>
+      <p class="gate-err" id="adminErr" hidden></p>
+    </div>
+
+    <div id="adminClaim" hidden>
+      <p class="gate-sub">No owner is set yet. Claim ownership to control this site.</p>
+      <button class="admin-btn primary" id="claimBtn" type="button">Claim ownership</button>
+    </div>
+
+    <div id="adminDenied" hidden>
+      <p class="gate-sub">This Google account is not the site owner.</p>
+      <button class="admin-btn" id="deniedOut" type="button">Sign out</button>
+    </div>
+
+    <div id="adminPanel" hidden>
+      <div class="status-row">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Active</span>
+      </div>
+      <p class="gate-sub">When the site is <strong>inactive</strong>, visitors only see your message below — nothing else. Use this to open the site early when a new model drops.</p>
+      <button class="admin-btn primary" id="toggleBtn" type="button">Deactivate site</button>
+      <label class="admin-label" for="msgInput">Offline message</label>
+      <textarea class="admin-msg" id="msgInput" rows="3"></textarea>
+      <button class="admin-btn" id="saveMsgBtn" type="button">Save message</button>
+      <p class="admin-saved" id="savedNote" hidden>Saved ✓</p>
+      <button class="admin-btn ghost" id="panelOut" type="button">Sign out</button>
+    </div>
+  </div>
+</div>
+<script type="module" src="adminp.js"></script>
+</body>
+</html>
