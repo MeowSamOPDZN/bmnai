@@ -30,7 +30,7 @@ const recentList = $("#recentList");
 const emptyRecents = $("#emptyRecents");
 
 const MODEL_NAME = "MNAI 9";
-const DEFAULT_NOTICE = MODEL_NAME + " currently on BMNAI but will be released on MNAI soon.";
+const DEFAULT_NOTICE = "Before MNAI is launching soon — check back shortly.";
 
 let user = null;
 let currentChatId = null;
@@ -419,6 +419,50 @@ async function doSignIn() {
 }
 $("#googleBtn").addEventListener("click", doSignIn);
 
+/* ---------------- site on/off (live + scheduled) ---------------- */
+let siteCfg = null;
+let lastEffective = true;
+let offlinePopupShown = false;
+
+function effectiveActive(cfg) {
+  if (!cfg) return true;
+  try {
+    const at = cfg.scheduledAt;
+    const ms = at && typeof at.toMillis === "function" ? at.toMillis() : (typeof at === "number" ? at : 0);
+    if (ms && Date.now() >= ms) return cfg.scheduledActive !== false;
+  } catch (e) {}
+  return cfg.active !== false;
+}
+
+function showOfflinePopup(msg) {
+  if (offlinePopupShown) return;
+  offlinePopupShown = true;
+  $("#offlineModalText").textContent = msg || "This website is deactivated.";
+  $("#offlineModal").hidden = false;
+}
+$("#offlineOk").addEventListener("click", () => location.reload());
+
+function watchSiteConfig() {
+  try {
+    onSnapshot(doc(db, "site", "config"), snap => {
+      if (!snap.exists()) return;
+      siteCfg = snap.data();
+      const eff = effectiveActive(siteCfg);
+      if (lastEffective && !eff && !app.classList.contains("offline")) {
+        showOfflinePopup(siteCfg.message || DEFAULT_NOTICE);
+      }
+      lastEffective = eff;
+    }, () => {});
+  } catch (e) {}
+}
+// scheduled flips need no write — re-evaluate the cached config periodically
+setInterval(() => {
+  if (offlinePopupShown || app.classList.contains("offline") || !siteCfg) return;
+  const eff = effectiveActive(siteCfg);
+  if (lastEffective && !eff) showOfflinePopup(siteCfg.message || DEFAULT_NOTICE);
+  lastEffective = eff;
+}, 30000);
+
 /* ---------------- boot ---------------- */
 async function getSiteConfig() {
   try {
@@ -430,12 +474,15 @@ async function getSiteConfig() {
 
 (async function boot() {
   const cfg = await getSiteConfig();
-  if (cfg.active === false) {
+  siteCfg = cfg;
+  lastEffective = effectiveActive(cfg);
+  if (!lastEffective) {
     $("#noticeText").textContent = cfg.message || DEFAULT_NOTICE;
     app.classList.add("offline");
     onlyView(noticeView);
     return;
   }
+  watchSiteConfig();
   onAuthStateChanged(auth, u => {
     user = u;
     updateUserCard();
