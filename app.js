@@ -431,6 +431,7 @@ async function getSiteConfig() {
   const cfg = await getSiteConfig();
   if (cfg.active === false) {
     $("#noticeText").textContent = cfg.message || DEFAULT_NOTICE;
+    app.classList.add("offline");
     onlyView(noticeView);
     return;
   }
