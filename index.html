@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Booman 4.2</title>
+<meta name="description" content="Booman 4.2 — Your Everyday AI, Ready for Anything.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230a0a0a'/><text x='16' y='22' font-family='Arial' font-size='18' font-weight='700' fill='white' text-anchor='middle'>B</text></svg>">
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar" aria-label="Sidebar">
+    <div class="sidebar-inner">
+      <div class="sidebar-head">
+        <span class="brand">Booman</span>
+        <button class="icon-btn" id="collapseBtn" aria-label="Toggle sidebar" title="Toggle sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><line x1="9.5" y1="4" x2="9.5" y2="20"/></svg>
+        </button>
+      </div>
+
+      <button class="new-chat" id="newChatBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        <span>New Chat</span>
+      </button>
+
+      <nav class="side-nav">
+        <p class="nav-label">Recent</p>
+        <ul class="nav-list" id="recentList">
+          <li><button class="nav-item is-active" data-chat="workout">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
+            <span>1-day workout plan</span></button></li>
+          <li><button class="nav-item" data-chat="homepage">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
+            <span>Homepage copy ideas</span></button></li>
+          <li><button class="nav-item" data-chat="reactbug">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
+            <span>Fix React state bug</span></button></li>
+          <li><button class="nav-item" data-chat="portrait">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
+            <span>Edit portrait background</span></button></li>
+        </ul>
+
+        <p class="nav-label">Tools</p>
+        <ul class="nav-list">
+          <li><button class="nav-item" data-tool="think">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21.5h4"/><path d="M12 2.5c.8 5.4 3.6 8.2 9 9-5.4.8-8.2 3.6-9 9-.8-5.4-3.6-8.2-9-9 5.4-.8 8.2-3.6 9-9z"/></svg>
+            <span>Think</span></button></li>
+          <li><button class="nav-item" data-tool="avatar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.8-3.8 3.9-5.8 7.5-5.8s6.7 2 7.5 5.8"/></svg>
+            <span>Create Avatar</span></button></li>
+          <li><button class="nav-item" data-tool="editimage">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 14.5 9.5"/><path d="M15.5 3.5v2.5M15.5 9.5v.01M11.5 5.5h2.5M17.5 5.5h.01M19 8l1.8 1.8M13 2l1.8 1.8"/></svg>
+            <span>Edit Image</span></button></li>
+          <li><button class="nav-item" data-tool="voice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg>
+            <span>Voice</span></button></li>
+        </ul>
+
+        <p class="nav-label">Account</p>
+        <ul class="nav-list">
+          <li><button class="nav-item" data-tool="prefs">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.9 2.9l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.9-2.9l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.9-2.9l.1.1a1.7 1.7 0 0 0 1.9.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h0a1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.9 2.9l-.1.1a1.7 1.7 0 0 0-.3 1.9v0a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.4 1z"/></svg>
+            <span>Preferences</span></button></li>
+          <li><button class="nav-item" data-tool="plan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12z"/></svg>
+            <span>Usage &amp; Plan</span></button></li>
+          <li><button class="nav-item" data-tool="help">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13a8 8 0 0 1 16 0"/><rect x="2.5" y="13" width="4.5" height="7" rx="2"/><rect x="17" y="13" width="4.5" height="7" rx="2"/></svg>
+            <span>Help &amp; Feedback</span></button></li>
+        </ul>
+      </nav>
+
+      <div class="user-card">
+        <img class="avatar" src="avatar.png" alt="Ethan Winter" width="36" height="36">
+        <div class="user-meta">
+          <p class="user-name">Ethan Winter</p>
+          <p class="user-mail">ethanwinter@booman.com</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><line x1="9.5" y1="4" x2="9.5" y2="20"/></svg>
+      </button>
+      <button class="model-picker" id="modelPicker" aria-label="Choose model">
+        <span>Booman 4.2</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <button class="icon-btn" id="historyBtn" aria-label="Chat history" title="Chat history">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+      </button>
+    </header>
+
+    <div class="scroll" id="scroll">
+      <!-- ===== HERO / NEW CHAT ===== -->
+      <section class="view hero" id="heroView">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero-inner">
+          <h1 class="hero-title" data-anim><span>Your Everyday AI,</span><br><span>Ready for Anything.</span></h1>
+          <p class="hero-sub" data-anim>Type your prompt below and press the button to start the journey.</p>
+
+          <div class="composer hero-composer" data-anim>
+            <textarea class="composer-input" rows="1" placeholder="Type your prompt here..." aria-label="Type your prompt"></textarea>
+            <div class="composer-bar">
+              <div class="composer-pills">
+                <button class="pill" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.5 11.5-8.8 8.8a5.5 5.5 0 0 1-7.8-7.8l8.3-8.3a3.7 3.7 0 0 1 5.2 5.2l-8.1 8.1a1.85 1.85 0 0 1-2.6-2.6l7.6-7.6"/></svg><span>Attach</span></button>
+                <button class="pill" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c.8 5.4 3.6 8.2 9 9-5.4.8-8.2 3.6-9 9-.8-5.4-3.6-8.2-9-9 5.4-.8 8.2-3.6 9-9z"/></svg><span>Think</span></button>
+                <button class="pill" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 14.5 9.5"/><path d="M15.5 3.5v2.5M15.5 9.5v.01M11.5 5.5h2.5M17.5 5.5h.01M19 8l1.8 1.8M13 2l1.8 1.8"/></svg><span>Edit Image</span></button>
+              </div>
+              <div class="composer-icons">
+                <button class="icon-circle" type="button" aria-label="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.5 11.5-8.8 8.8a5.5 5.5 0 0 1-7.8-7.8l8.3-8.3a3.7 3.7 0 0 1 5.2 5.2l-8.1 8.1a1.85 1.85 0 0 1-2.6-2.6l7.6-7.6"/></svg></button>
+                <button class="icon-circle" type="button" aria-label="Think"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c.8 5.4 3.6 8.2 9 9-5.4.8-8.2 3.6-9 9-.8-5.4-3.6-8.2-9-9 5.4-.8 8.2-3.6 9-9z"/></svg></button>
+                <button class="icon-circle" type="button" aria-label="Edit image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 14.5 9.5"/><path d="M15.5 3.5v2.5M15.5 9.5v.01M11.5 5.5h2.5M17.5 5.5h.01M19 8l1.8 1.8M13 2l1.8 1.8"/></svg></button>
+              </div>
+              <div class="composer-actions">
+                <button class="pill voice" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg><span>Voice</span></button>
+                <button class="send-btn" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-cards" data-anim-group>
+            <article class="tool-card" data-anim>
+              <span class="tool-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21.5h4"/><path d="M12 2.5a6.5 6.5 0 0 0-4.2 11.4c.9.8 1.2 1.7 1.2 2.6h6c0-.9.3-1.8 1.2-2.6A6.5 6.5 0 0 0 12 2.5z"/></svg>Think</span>
+              <p>Solve the hardest problems in math, science, and coding with our reasoning model.</p>
+            </article>
+            <article class="tool-card" data-anim>
+              <span class="tool-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5c.8-3.8 3.9-5.8 7.5-5.8s6.7 2 7.5 5.8"/></svg>Create Avatar</span>
+              <p>Dive deep to deliver insightful results with Boman's fast and innovative avatar.</p>
+            </article>
+            <article class="tool-card" data-anim>
+              <span class="tool-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 14.5 9.5"/><path d="M15.5 3.5v2.5M15.5 9.5v.01M11.5 5.5h2.5M17.5 5.5h.01M19 8l1.8 1.8M13 2l1.8 1.8"/></svg>Edit Image</span>
+              <p>Transform your images with style transfers, edits, and more.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CHAT ===== -->
+      <section class="view chat" id="chatView" hidden>
+        <div class="thread" id="thread"></div>
+      </section>
+    </div>
+
+    <!-- ===== CHAT COMPOSER (sticky) ===== -->
+    <footer class="composer-dock" id="composerDock" hidden>
+      <div class="composer">
+        <textarea class="composer-input" rows="1" placeholder="Type your prompt here..." aria-label="Type your prompt"></textarea>
+        <div class="composer-bar">
+          <div class="composer-pills">
+            <button class="pill" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.5 11.5-8.8 8.8a5.5 5.5 0 0 1-7.8-7.8l8.3-8.3a3.7 3.7 0 0 1 5.2 5.2l-8.1 8.1a1.85 1.85 0 0 1-2.6-2.6l7.6-7.6"/></svg><span>Attach</span></button>
+            <button class="pill" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c.8 5.4 3.6 8.2 9 9-5.4.8-8.2 3.6-9 9-.8-5.4-3.6-8.2-9-9 5.4-.8 8.2-3.6 9-9z"/></svg><span>Think</span></button>
+            <button class="pill" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 14.5 9.5"/><path d="M15.5 3.5v2.5M15.5 9.5v.01M11.5 5.5h2.5M17.5 5.5h.01M19 8l1.8 1.8M13 2l1.8 1.8"/></svg><span>Edit Image</span></button>
+          </div>
+          <div class="composer-icons">
+            <button class="icon-circle" type="button" aria-label="Attach"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.5 11.5-8.8 8.8a5.5 5.5 0 0 1-7.8-7.8l8.3-8.3a3.7 3.7 0 0 1 5.2 5.2l-8.1 8.1a1.85 1.85 0 0 1-2.6-2.6l7.6-7.6"/></svg></button>
+            <button class="icon-circle" type="button" aria-label="Think"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c.8 5.4 3.6 8.2 9 9-5.4.8-8.2 3.6-9 9-.8-5.4-3.6-8.2-9-9 5.4-.8 8.2-3.6 9-9z"/></svg></button>
+            <button class="icon-circle" type="button" aria-label="Edit image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 14.5 9.5"/><path d="M15.5 3.5v2.5M15.5 9.5v.01M11.5 5.5h2.5M17.5 5.5h.01M19 8l1.8 1.8M13 2l1.8 1.8"/></svg></button>
+          </div>
+          <div class="composer-actions">
+            <button class="pill voice" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg><span>Voice</span></button>
+            <button class="send-btn" type="button" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
