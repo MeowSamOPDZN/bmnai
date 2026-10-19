@@ -29,7 +29,8 @@ const dock       = $("#composerDock");
 const recentList = $("#recentList");
 const emptyRecents = $("#emptyRecents");
 
-const DEFAULT_NOTICE = "Before MNAI is launching soon — check back shortly.";
+const MODEL_NAME = "MNAI 9";
+const DEFAULT_NOTICE = MODEL_NAME + " currently on BMNAI but will be released on MNAI soon.";
 
 let user = null;
 let currentChatId = null;
