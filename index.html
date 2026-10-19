@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Booman 4.2</title>
-<meta name="description" content="Booman 4.2 — Your Everyday AI, Ready for Anything.">
+<title>Before MNAI</title>
+<meta name="description" content="Before MNAI — powered by MNAI 9. Your Everyday AI, Ready for Anything.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
   <aside class="sidebar" id="sidebar" aria-label="Sidebar">
     <div class="sidebar-inner">
       <div class="sidebar-head">
-        <span class="brand">Booman</span>
+        <span class="brand">Before MNAI</span>
         <button class="icon-btn" id="collapseBtn" aria-label="Toggle sidebar" title="Toggle sidebar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><line x1="9.5" y1="4" x2="9.5" y2="20"/></svg>
         </button>
@@ -31,20 +31,8 @@
 
       <nav class="side-nav">
         <p class="nav-label">Recent</p>
-        <ul class="nav-list" id="recentList">
-          <li><button class="nav-item is-active" data-chat="workout">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
-            <span>1-day workout plan</span></button></li>
-          <li><button class="nav-item" data-chat="homepage">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
-            <span>Homepage copy ideas</span></button></li>
-          <li><button class="nav-item" data-chat="reactbug">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
-            <span>Fix React state bug</span></button></li>
-          <li><button class="nav-item" data-chat="portrait">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>
-            <span>Edit portrait background</span></button></li>
-        </ul>
+        <ul class="nav-list" id="recentList"></ul>
+        <p class="empty-recents" id="emptyRecents">No chats yet — start one below.</p>
 
         <p class="nav-label">Tools</p>
         <ul class="nav-list">
@@ -76,11 +64,11 @@
         </ul>
       </nav>
 
-      <div class="user-card">
-        <img class="avatar" src="avatar.png" alt="Ethan Winter" width="36" height="36">
+      <div class="user-card" id="userCard">
+        <img class="avatar" id="userAvatar" src="avatar.png" alt="User" width="36" height="36">
         <div class="user-meta">
-          <p class="user-name">Ethan Winter</p>
-          <p class="user-mail">ethanwinter@booman.com</p>
+          <p class="user-name" id="userName">Sign in</p>
+          <p class="user-mail" id="userMail">to sync your chats</p>
         </div>
       </div>
     </div>
@@ -93,8 +81,11 @@
       <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><line x1="9.5" y1="4" x2="9.5" y2="20"/></svg>
       </button>
-      <button class="model-picker" id="modelPicker" aria-label="Choose model">
-        <span>Booman 4.2</span>
+      <button class="icon-btn side-btn" id="sideBtn" aria-label="Open sidebar" title="Open sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><line x1="9.5" y1="4" x2="9.5" y2="20"/></svg>
+      </button>
+      <button class="model-picker" id="modelPicker" aria-label="Model">
+        <span>MNAI 9</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
       </button>
       <button class="icon-btn" id="historyBtn" aria-label="Chat history" title="Chat history">
@@ -103,8 +94,30 @@
     </header>
 
     <div class="scroll" id="scroll">
+      <!-- ===== SIGN IN ===== -->
+      <section class="view gate" id="signinView" hidden>
+        <div class="gate-card" data-anim>
+          <p class="gate-brand">Before MNAI</p>
+          <h2 class="gate-title">Your Everyday AI,<br>Ready for Anything.</h2>
+          <p class="gate-sub">Sign in to start chatting — your chats sync across all your devices.</p>
+          <button class="google-btn" id="googleBtn" type="button">
+            <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M23.5 12.3c0-.9-.1-1.5-.3-2.3H12v4.3h6.5c-.1 1.1-.8 2.7-2.4 3.8l-.1.1 3.5 2.7.2.1c2.2-2 3.8-5 3.8-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.8-2.9c-1 .7-2.4 1.2-4.1 1.2-3.1 0-5.8-2.1-6.8-5l-.1.1-3.6 2.8-.1.1C3.5 21.3 7.5 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.7.4-2.4l-.1-.1-3.6-2.8-.1.1C.5 8.5 0 10.1 0 12s.5 3.5 1.4 5.1l3.8-2.7z"/><path fill="#EA4335" d="M12 4.7c1.8 0 3 .8 3.7 1.4l3.3-3.2C17.9 1.1 15.2 0 12 0 7.5 0 3.5 2.7 1.4 6.8l3.8 2.9c1-2.9 3.7-5 6.8-5z"/></svg>
+            <span>Sign in with Google</span>
+          </button>
+          <p class="gate-err" id="gateErr" hidden></p>
+        </div>
+      </section>
+
+      <!-- ===== SITE NOTICE (when deactivated by owner) ===== -->
+      <section class="view gate" id="noticeView" hidden>
+        <div class="gate-card" data-anim>
+          <p class="gate-brand">Before MNAI</p>
+          <p class="notice-text" id="noticeText"></p>
+        </div>
+      </section>
+
       <!-- ===== HERO / NEW CHAT ===== -->
-      <section class="view hero" id="heroView">
+      <section class="view hero" id="heroView" hidden>
         <div class="hero-glow" aria-hidden="true"></div>
         <div class="hero-inner">
           <h1 class="hero-title" data-anim><span>Your Everyday AI,</span><br><span>Ready for Anything.</span></h1>
@@ -178,6 +191,6 @@
   </main>
 </div>
 
-<script src="app.js"></script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
