@@ -47,6 +47,19 @@
       <textarea class="admin-msg" id="msgInput" rows="3"></textarea>
       <button class="admin-btn" id="saveMsgBtn" type="button">Save message</button>
       <p class="admin-saved" id="savedNote" hidden>Saved ✓</p>
+      <div class="sched-box">
+        <label class="admin-label" for="schedAt" style="margin-top:0">Schedule activation / deactivation</label>
+        <div class="sched-row">
+          <input type="datetime-local" id="schedAt" class="admin-datetime">
+          <select id="schedAction" class="admin-select">
+            <option value="false">Deactivate</option>
+            <option value="true">Activate</option>
+          </select>
+        </div>
+        <button class="admin-btn" id="schedBtn" type="button">Schedule</button>
+        <button class="admin-btn ghost" id="schedClear" type="button" hidden>Clear schedule</button>
+        <p class="sched-note" id="schedNote" hidden></p>
+      </div>
       <button class="admin-btn ghost" id="panelOut" type="button">Sign out</button>
     </div>
   </div>
