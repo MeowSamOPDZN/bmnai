@@ -5,6 +5,8 @@ import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/
 
 const $ = s => document.querySelector(s);
 const cfgRef = doc(db, "site", "config");
+const MODEL_NAME = "MNAI 9";
+const DEFAULT_NOTICE = MODEL_NAME + " currently on BMNAI but will be released on MNAI soon.";
 let user = null;
 let cfg = { active: true, message: "" };
 
@@ -20,7 +22,7 @@ function paint() {
   $("#statusDot").classList.toggle("off", !active);
   $("#statusText").textContent = active ? "Active — visitors can chat" : "Inactive — visitors see your message";
   $("#toggleBtn").textContent = active ? "Deactivate site" : "Activate site";
-  if (document.activeElement !== $("#msgInput")) $("#msgInput").value = cfg.message || "";
+  if (document.activeElement !== $("#msgInput")) $("#msgInput").value = cfg.message || DEFAULT_NOTICE;
 }
 
 async function load() {
