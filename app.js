@@ -411,6 +411,8 @@ $("#userCard").addEventListener("click", async () => {
 async function doSignIn() {
   const errEl = $("#gateErr");
   errEl.hidden = true;
+  const tc = $("#termsCheck");
+  if (tc && !tc.checked) { errEl.textContent = "Please accept the Terms and Privacy Policy first."; errEl.hidden = false; return; }
   try {
     await signInWithPopup(auth, googleProvider);
   } catch (e) {
@@ -432,6 +434,7 @@ function friendlyAuthErr(e) {
 async function emailAuth(mode) {
   const errEl = $("#gateErr");
   errEl.hidden = true;
+  if (mode === "signup") { const tc = $("#termsCheck"); if (tc && !tc.checked) { errEl.textContent = "Please accept the Terms and Privacy Policy first."; errEl.hidden = false; return; } }
   const email = $("#emailInput").value.trim();
   const pass = $("#passInput").value;
   if (!email || !pass) { errEl.textContent = "Enter an email and a password first."; errEl.hidden = false; return; }
