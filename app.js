@@ -3,11 +3,12 @@
    ============================================================ */
 import { auth, db, googleProvider } from "./firebase-init.js";
 import {
-  signInWithPopup, signOut, onAuthStateChanged
+  signInWithPopup, signOut, onAuthStateChanged,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   collection, doc, getDoc, setDoc, addDoc, updateDoc,
-  query, orderBy, onSnapshot, serverTimestamp
+  query, where, orderBy, limit, getDocs, onSnapshot, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const $  = (s, r) => (r || document).querySelector(s);
@@ -419,6 +420,29 @@ async function doSignIn() {
 }
 $("#googleBtn").addEventListener("click", doSignIn);
 
+/* email + password sign-up / sign-in */
+function friendlyAuthErr(e) {
+  const code = e && e.code;
+  if (code === "auth/email-already-in-use") return "That email already has an account — log in instead.";
+  if (code === "auth/invalid-credential" || code === "auth/wrong-password" || code === "auth/user-not-found") return "Wrong email or password.";
+  if (code === "auth/weak-password") return "Password should be at least 6 characters.";
+  if (code === "auth/invalid-email") return "That email address does not look right.";
+  return "Sign-in failed — " + (code || "try again") + ".";
+}
+async function emailAuth(mode) {
+  const errEl = $("#gateErr");
+  errEl.hidden = true;
+  const email = $("#emailInput").value.trim();
+  const pass = $("#passInput").value;
+  if (!email || !pass) { errEl.textContent = "Enter an email and a password first."; errEl.hidden = false; return; }
+  try {
+    if (mode === "signup") await createUserWithEmailAndPassword(auth, email, pass);
+    else await signInWithEmailAndPassword(auth, email, pass);
+  } catch (e) { errEl.textContent = friendlyAuthErr(e); errEl.hidden = false; }
+}
+$("#emailSignupBtn").addEventListener("click", () => emailAuth("signup"));
+$("#emailLoginBtn").addEventListener("click", () => emailAuth("login"));
+
 /* ---------------- site on/off (live + scheduled) ---------------- */
 let siteCfg = null;
 let lastEffective = true;
@@ -463,6 +487,65 @@ setInterval(() => {
   lastEffective = eff;
 }, 30000);
 
+/* ---------------- reviews + applied popup ---------------- */
+let reviewRating = 5;
+let reviewPrompted = false;
+function paintStars() {
+  $$("#revStars .star-btn").forEach(b => b.classList.toggle("is-on", Number(b.dataset.v) <= reviewRating));
+}
+$$("#revStars .star-btn").forEach(b => b.addEventListener("click", () => { reviewRating = Number(b.dataset.v); paintStars(); }));
+paintStars();
+$("#reviewLaterBtn").addEventListener("click", () => { $("#reviewModal").hidden = true; });
+$("#reviewDoneBtn").addEventListener("click", () => { $("#reviewModal").hidden = true; });
+$("#appliedOk").addEventListener("click", async () => {
+  $("#appliedModal").hidden = true;
+  try { await setDoc(doc(db, "users", user.uid), { appliedSeen: true }, { merge: true }); } catch (e) {}
+});
+$("#reviewForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const errEl = $("#reviewErr");
+  errEl.hidden = true;
+  const name = $("#revName").value.trim();
+  const role = $("#revRole").value.trim();
+  const reason = $("#revReason").value.trim();
+  const text = $("#revText").value.trim();
+  if (!name || !role || !reason || !text) {
+    errEl.textContent = "Please fill in every field — name, role, reason and review.";
+    errEl.hidden = false;
+    return;
+  }
+  try {
+    await addDoc(collection(db, "reviews"), {
+      uid: user.uid, email: user.email || "",
+      name, role, reason, rating: reviewRating, text,
+      status: "pending", createdAt: serverTimestamp()
+    });
+    await setDoc(doc(db, "users", user.uid), { reviewSubmitted: true }, { merge: true });
+    $("#reviewForm").hidden = true;
+    $("#reviewDone").hidden = false;
+  } catch (err) {
+    errEl.textContent = "Could not send the review — the database rules may not be published yet.";
+    errEl.hidden = false;
+  }
+});
+async function reviewFlow() {
+  if (reviewPrompted) return;
+  reviewPrompted = true;
+  try {
+    if (siteCfg && siteCfg.ownerUid === user.uid) return;
+    const uSnap = await getDoc(doc(db, "users", user.uid));
+    const uData = uSnap.exists() ? uSnap.data() : {};
+    const q = query(collection(db, "reviews"), where("uid", "==", user.uid), orderBy("createdAt", "desc"), limit(1));
+    const snap = await getDocs(q);
+    const rev = snap.empty ? null : snap.docs[0].data();
+    if (rev && rev.status === "applied" && !uData.appliedSeen) {
+      $("#appliedModal").hidden = false;
+      return;
+    }
+    if (!rev) $("#reviewModal").hidden = false;
+  } catch (e) { /* rules not published yet — stay silent */ }
+}
+
 /* ---------------- boot ---------------- */
 async function getSiteConfig() {
   try {
@@ -496,6 +579,7 @@ async function getSiteConfig() {
     } else {
       subscribeChats();
       showHero();
+      reviewFlow();
     }
   });
 })();
