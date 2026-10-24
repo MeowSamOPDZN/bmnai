@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="admin-page">
-  <div class="admin-card" data-anim>
+  <div class="admin-card" id="adminCard" data-anim>
     <p class="gate-brand">Before MNAI · Admin</p>
     <h1 class="admin-title">Site control</h1>
 
@@ -37,30 +37,46 @@
     </div>
 
     <div id="adminPanel" hidden>
-      <div class="status-row">
-        <span class="status-dot" id="statusDot"></span>
-        <span id="statusText">Active</span>
-      </div>
-      <p class="gate-sub">When the site is <strong>inactive</strong>, visitors only see your message below — nothing else. Use this to open the site early when a new model drops.</p>
-      <button class="admin-btn primary" id="toggleBtn" type="button">Deactivate site</button>
-      <label class="admin-label" for="msgInput">Offline message</label>
-      <textarea class="admin-msg" id="msgInput" rows="3"></textarea>
-      <button class="admin-btn" id="saveMsgBtn" type="button">Save message</button>
-      <p class="admin-saved" id="savedNote" hidden>Saved ✓</p>
-      <div class="sched-box">
-        <label class="admin-label" for="schedAt" style="margin-top:0">Schedule activation / deactivation</label>
-        <div class="sched-row">
-          <input type="datetime-local" id="schedAt" class="admin-datetime">
-          <select id="schedAction" class="admin-select">
-            <option value="false">Deactivate</option>
-            <option value="true">Activate</option>
-          </select>
+      <div class="admin-shell">
+        <nav class="admin-side" aria-label="Admin sections">
+          <button class="admin-navbtn is-active" data-cat="activation" type="button">Activation</button>
+          <button class="admin-navbtn" data-cat="reviews" type="button">Reviews <span class="admin-count" id="reviewCount" hidden></span></button>
+          <button class="admin-btn ghost" id="panelOut" type="button">Sign out</button>
+        </nav>
+        <div class="admin-main">
+          <div id="catActivation">
+            <div class="status-row">
+              <span class="status-dot" id="statusDot"></span>
+              <span id="statusText">Active</span>
+            </div>
+            <p class="gate-sub">When the site is <strong>inactive</strong>, visitors only see your message below — nothing else. Use this to open the site early when a new model drops.</p>
+            <button class="admin-btn primary" id="toggleBtn" type="button">Deactivate site</button>
+            <label class="admin-label" for="msgInput">Offline message</label>
+            <textarea class="admin-msg" id="msgInput" rows="3"></textarea>
+            <button class="admin-btn" id="saveMsgBtn" type="button">Save message</button>
+            <p class="admin-saved" id="savedNote" hidden>Saved ✓</p>
+            <div class="sched-box">
+              <label class="admin-label" for="schedAt" style="margin-top:0">Schedule activation / deactivation</label>
+              <div class="sched-row">
+                <input type="datetime-local" id="schedAt" class="admin-datetime">
+                <select id="schedAction" class="admin-select">
+                  <option value="false">Deactivate</option>
+                  <option value="true">Activate</option>
+                </select>
+              </div>
+              <button class="admin-btn" id="schedBtn" type="button">Schedule</button>
+              <button class="admin-btn ghost" id="schedClear" type="button" hidden>Clear schedule</button>
+              <p class="sched-note" id="schedNote" hidden></p>
+            </div>
+          </div>
+          <div id="catReviews" hidden>
+            <p class="gate-sub">Every review sent from the site shows up here. <strong>Apply</strong> a review to let that account use BMNAI — next time they open the site they will see a "You are applied" pop-up, and closing it opens the site (as long as it is activated).</p>
+            <p class="gate-sub" id="noReviews">No reviews yet.</p>
+            <div id="reviewList"></div>
+            <p class="gate-err" id="reviewErr" hidden></p>
+          </div>
         </div>
-        <button class="admin-btn" id="schedBtn" type="button">Schedule</button>
-        <button class="admin-btn ghost" id="schedClear" type="button" hidden>Clear schedule</button>
-        <p class="sched-note" id="schedNote" hidden></p>
       </div>
-      <button class="admin-btn ghost" id="panelOut" type="button">Sign out</button>
     </div>
   </div>
 </div>
